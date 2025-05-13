@@ -1,0 +1,57 @@
+DMD 2.0
+New object
+TriMesh()
+numverts numfaces
+   4        2
+Mesh vertices:
+	-2.26056e-006 -0.833333 -1.0
+	-2.26056e-006 0.833333 -1.0
+	-2.26056e-006 -0.833333 1.0
+	-2.26056e-006 0.833333 1.0
+end vertices
+Mesh faces:
+	3 1 4
+	2 4 1
+end faces
+Smooth normals:
+	1.0 0.0 0.0
+	1.0 0.0 0.0
+	1.0 0.0 0.0
+	1.0 0.0 0.0
+end smooth normals
+end mesh
+Material:
+diffuse color
+	149.94 149.94 149.94
+ambient color
+	149.94 149.94 149.94
+specular color
+	229.5 229.5 229.5
+glossiness
+	10.0
+opacity
+	100.0
+diffuse map
+door_012_diffuse.jpg
+bump map
+	None
+specular map
+	None
+end material
+New Texture:
+numtverts numtvfaces
+   6        2
+Texture vertices:
+	0.0693962 0.000499725 0.5
+	0.930604 0.000499547 0.5
+	0.0693964 0.9995 0.5
+	0.930604 0.9995 0.5
+	0.0693962 0.000499725 0.5
+	0.930604 0.9995 0.5
+end texture vertices
+Texture faces:
+	3 5 6
+	2 4 1
+end texture faces
+end of texture
+end of file

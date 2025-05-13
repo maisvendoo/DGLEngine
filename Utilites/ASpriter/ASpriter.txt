@@ -1,0 +1,70 @@
+---------------------
+ASpriter version 0.5
+Sprite Rendering Tool
+
+Created by 3d[Power]
+http://club.nudl.net
+haz-3dpower@mail.ru
+ICQ: 287344
+---------------------
+
+
+Description
+-----------
+This programm able to glue pictures sequence (or animation) into
+one big image.
+- Rendering into bmp, tga, jpg.
+- Rendering with correct TGA's alpha channel.
+- Very configurable render properties.
+- Internal tool "image splitter", can split big image into pieces (with correct alpha channel)
+- Animation player.
+
+
+License
+-------
+ The author disclaims all warranties relating to this product,
+whenever expressed or implied, including without any limitation,
+any implied warranties of merchantability or fitness for a particular
+purpose.
+
+ The author will not be liable for any special, incidental, consequential,
+indirect or similar damages due to loss of data, damage of hardware or
+any other reason, even if the author was advised of the possibility of
+such loss or damage.
+
+
+Version history
+---------------
+0.5
+- More intelligent filename generation of splitted images.
+- TGA rendering now not mirrored and have not tga's mirrored flag.
+- Correct file extension handling at rendering dialog.
+- Added trackbar for animation speed.
+
+0.4
+- Aspriter can load bmp, tga, jpeg. And render into bmp, tga, jpeg.
+- Added: TGA 32 bit alpha channel support. ASpriter is only tool which can joint TGAs with saving alpha channel.
+- Rendering routines rewrited. Greatly increaded rendering speed.
+- Main window now sizeable.
+- "Image splitter" tool now works much faster. Also supports bmp, jpeg, tga (with correct alpha channel splitting).
+
+0.35
+- Fixed bugs in image splitter tool.
+- Added ability to load Jpeg, TGA images
+- Added: rendering to TGA, but without alpha channel.
+
+0.34
+- ASpriter now remember name and path of last rendered file.
+- Added ability to zoom previewed image. Just click on it (2x zoom).
+
+0.33
+- Some bug fixes and improvements in sprite rendering routine.
+- bug fix in reverse list operation.
+
+0.32
+- Added custom bit depth support.
+
+0.3
+- Added ability to save, load, clear, reverse frame list.
+- Added operation "Delete every N Frame" (from frame list).
+- Bug fix: incorrect rendering with force texture size option.

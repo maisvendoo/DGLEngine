@@ -1,0 +1,26 @@
+!!ARBvp1.0
+############################################
+# 	Bump Mapping Vertex Shader 	   #
+# 		  V 1.0			   #
+# For DGLEngine V 1.1,	Author: DRON	   #
+############################################
+OUTPUT texcoord=result.texcoord[0];
+OUTPUT lightVec=result.texcoord[1];
+OUTPUT viewVec=result.texcoord[2];
+PARAM lightPos=program.local[0];
+PARAM camPos=program.local[1];
+TEMP vVec;
+DP4 result.position.x,state.matrix.mvp.row[0],vertex.position;
+DP4 result.position.y,state.matrix.mvp.row[1],vertex.position;
+DP4 result.position.z,state.matrix.mvp.row[2],vertex.position;
+DP4 result.position.w,state.matrix.mvp.row[3],vertex.position;
+MOV texcoord,vertex.texcoord[0];
+SUB vVec.xyzw,lightPos,vertex.position;
+DP3 lightVec.x,vertex.texcoord[1],vVec.xyzw;
+DP3 lightVec.y,vertex.texcoord[2],vVec.xyzw;
+DP3 lightVec.z,vertex.texcoord[3],vVec.xyzw;
+SUB vVec.xyzw,camPos,vertex.position;
+DP3 viewVec.x,vertex.texcoord[1],vVec.xyzw;
+DP3 viewVec.y,vertex.texcoord[2],vVec.xyzw;
+DP3 viewVec.z,vertex.texcoord[3],vVec.xyzw;
+END

@@ -1,0 +1,95 @@
+DMD 2.0
+New object
+TriMesh()
+numverts numfaces
+   12        10
+Mesh vertices:
+	1.0 0.0 -2.06629e-006
+	0.866028 0.5 -2.06629e-006
+	0.5 0.866025 -2.06629e-006
+	0.0 1.0 -2.06629e-006
+	-0.5 0.866025 -2.06629e-006
+	-0.866028 0.5 -2.06629e-006
+	-1.0 1.58946e-007 -2.06629e-006
+	-0.866028 -0.5 -2.06629e-006
+	-0.5 -0.866025 -2.06629e-006
+	0.0 -1.0 -2.06629e-006
+	0.5 -0.866026 -2.06629e-006
+	0.866028 -0.500001 -2.06629e-006
+end vertices
+Mesh faces:
+	3 4 5
+	5 6 7
+	7 8 9
+	5 7 9
+	9 10 11
+	11 12 1
+	9 11 1
+	5 9 1
+	3 5 1
+	2 3 1
+end faces
+Smooth normals:
+	0.0 0.0 1.0
+	0.0 0.0 1.0
+	0.0 0.0 1.0
+	0.0 0.0 1.0
+	0.0 0.0 1.0
+	0.0 0.0 1.0
+	0.0 0.0 1.0
+	0.0 0.0 1.0
+	0.0 0.0 1.0
+	0.0 0.0 1.0
+	0.0 0.0 1.0
+	0.0 0.0 1.0
+end smooth normals
+end mesh
+Material:
+diffuse color
+	149.94 149.94 149.94
+ambient color
+	149.94 149.94 149.94
+specular color
+	229.5 229.5 229.5
+glossiness
+	10.0
+opacity
+	100.0
+diffuse map
+tube_003_diffuse.jpg
+bump map
+	None
+specular map
+	None
+end material
+New Texture:
+numtverts numtvfaces
+   12        10
+Texture vertices:
+	1.7 0.5 0.5
+	1.53923 1.1 0.5
+	1.1 1.53923 0.5
+	0.5 1.7 0.5
+	-0.0999998 1.53923 0.5
+	-0.53923 1.1 0.5
+	-0.7 0.5 0.5
+	-0.539231 -0.0999994 0.5
+	-0.100001 -0.53923 0.5
+	0.499999 -0.7 0.5
+	1.1 -0.539231 0.5
+	1.53923 -0.100001 0.5
+end texture vertices
+Texture faces:
+	3 4 5
+	5 6 7
+	7 8 9
+	5 7 9
+	9 10 11
+	11 12 1
+	9 11 1
+	5 9 1
+	3 5 1
+	2 3 1
+end texture faces
+end of texture
+end of file

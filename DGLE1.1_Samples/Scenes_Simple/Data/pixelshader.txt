@@ -1,0 +1,99 @@
+!!ARBfp1.0
+
+############################################
+# 	Shadow Map Blend Pixel Shader 	   #
+# 		  V 1.0			   #
+# For DGLEngine V 1.1,	Author: DRON	   #
+############################################
+
+#Шейдер блендин ShadowMap с основной текстурой (не работает для объектов без текстур) и билинейно размывает ShadowMap
+#В 0 параметр передаваемый из приложения в W записывается прозрачность ShadowMap от 0.0 до 1.0
+
+OPTION ARB_fragment_program_shadow; #Будем использовать теневую текстуру
+
+# Входные параметры
+ATTRIB inTexCoord1 = fragment.texcoord[0];   # Берем координаты текселя обычной текстуры из MTEX_LAYER0
+ATTRIB inTexCoord2 = fragment.texcoord[1];   # Берем координаты текселя теневой текстуры (карты) из MTEX_LAYER1
+ATTRIB inColor     = fragment.color.primary; # Входной цвет с вершинного конвеера
+
+PARAM blend=program.local[0]; #Параметр приходит из приложения, указывает прозрачность теневой карты
+
+# Возвращать будем расчитанный цвет текущего пикселя
+OUTPUT outColor   = result.color;
+
+#Локальные переменные
+TEMP texelColor1, texel2, prelightcolor, z, z_result, z1, z2, z_base, zx, zy, texcor1, texcor2;
+
+TXP texelColor1, inTexCoord1, texture[0], 2D; 	# Берем цвет текселя обычной текстуры
+TXP texel2, inTexCoord2 , texture[1], SHADOW2D; # Берем цвет текселя теневой карты
+
+SUB z, texelColor1.z, texel2.z; #Расчитываем разность между Z координатами пикселя и в теневой карте
+CMP z_base, z, 1.0, blend.w; #Сравниваем результат расчета с нулем, если меньше 0 то тени нет иначе присваеваем значение бленда
+
+#Размываем теневую карту по соседним текселям
+
+#ПО S
+
+#Тексель S-1
+MOV texcor1, inTexCoord1;
+MOV texcor2, inTexCoord2;
+
+SUB	texcor1, inTexCoord1, {1, 0, 0, 0};
+SUB	texcor2, inTexCoord2, {1, 0, 0, 0};
+TXP texelColor1, texcor1, texture[0], 2D; 	
+TXP texel2, texcor2 , texture[1], SHADOW2D; 
+
+SUB z, texelColor1.z, texel2.z;
+CMP z1, z, 1.0, blend.w;
+
+#Тексель S+1
+MOV texcor1, inTexCoord1;
+MOV texcor2, inTexCoord2;
+
+ADD	texcor1, inTexCoord1, {1, 0, 0, 0};
+ADD	texcor2, inTexCoord2, {1, 0, 0, 0};
+TXP texelColor1, texcor1, texture[0], 2D; 	
+TXP texel2, texcor2 , texture[1], SHADOW2D; 
+
+SUB z, texelColor1.z, texel2.z;
+CMP z2, z, 1.0, blend.w;
+
+LRP zx, 0.5, z1, z2; #Интерполируем значения по X
+
+#ПО T
+
+#Тексель T-1
+MOV texcor1, inTexCoord1;
+MOV texcor2, inTexCoord2;
+
+SUB	texcor1, inTexCoord1, {0, 1, 0, 0};
+SUB	texcor2, inTexCoord2, {0, 1, 0, 0};
+TXP texelColor1, texcor1, texture[0], 2D; 	
+TXP texel2, texcor2 , texture[1], SHADOW2D; 
+
+SUB z, texelColor1.z, texel2.z;
+CMP z1, z, 1.0, blend.w;
+
+#Тексель T+1
+MOV texcor1, inTexCoord1;
+MOV texcor2, inTexCoord2;
+
+ADD	texcor1, inTexCoord1, {0, 1, 0, 0};
+ADD	texcor2, inTexCoord2, {0, 1, 0, 0};
+TXP texelColor1, texcor1, texture[0], 2D; 	
+TXP texel2, texcor2 , texture[1], SHADOW2D; 
+
+SUB z, texelColor1.z, texel2.z;
+CMP z2, z, 1.0, blend.w;
+
+LRP zy, 0.5, z1, z2; #Интерполируем значения по Y
+
+#Конец размытия#
+
+LRP z_result, z_base, zx, zy; #Интерполируем 3 полученных значения
+
+MUL prelightcolor, texelColor1, z_result; #Умножаем результат расчета по глубине на цвет текседя обычной текстуры  
+MUL outColor, prelightcolor, inColor;	 # Результат умножаем на цвет пикселя с вершинного конвеера (для diffuse color)
+
+END
+

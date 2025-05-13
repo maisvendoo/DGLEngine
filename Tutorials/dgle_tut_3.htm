@@ -1,0 +1,103 @@
+<HTML>
+<HEAD>
+    <TITLE>DRON_PROGS</TITLE> 
+<META content="text/html; charset=WINDOWS-1251" http-equiv=Content-Type>                     
+<META name="author" content="DRON">
+<META name="keywords" content="программирование, программирование игр, gamedev, Delphi, Java, J2ME, C#, C++, mono, tao, фото, engine, 3d, полезные программы, звук, графика, коды, DirectX, OpenGL, библиотеки, компоненты, как создать игру, движок, движок на Delphi, DRON, Коротков Андрей, скачать, примеры, исходники, source, OpenGL Engine, 3D, анимированные модели, max, Power Draw, Asphyre, DelphiX, обучение, dglengine, бесплатно, ролевая игра, RPG, стрелялка, shooter, games, статьи, помощь"> 
+<META name="description" content="Обитель DRON'а. Программирование на Delphi, C#, C++ и J2ME. Gamedev: 2D/3D, статьи, исходники, примеры, движки."> 
+<style type="text/css">
+#menu_body{background:#808080;width:140px}
+#menu_body ul li{list-style-type:none;border-bottom:1px solid #fff;margin-left:-40px;padding-left:7px}
+#menu_body ul li a{color:#fff;font-family:verdana,arial,sans-serif;text-decoration:none}
+#menu_body ul li ul li{border:0;list-style-type:square;color:#fff;list-style-position:inside}
+#menu_body ul li ul{border-top:1px solid #fff;margin-left:-7px;padding-left:50px}
+#menu_body li ul{display:none}
+#menu_body li:hover ul, #menu_body li.over ul{display: block}
+
+body,td,th {
+	font-family:  tahoma, Arial, Helvetica;
+	font-size: 11px;
+	color: Black;
+	text-decoration:none;
+}
+body {
+	background-color: White;
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	text-decoration:none;
+}
+a:link {
+	color: Black;
+	text-decoration:none;
+}
+a:visited {
+	color: Black;
+	text-decoration:none;
+}
+a:hover {
+	color: Gray;
+	text-decoration:underline;
+}
+a:active {
+	color: Gray;
+	text-decoration:none;
+}
+</style>
+
+<script type="text/javascript">
+startList = function() {
+      if (document.all&&document.getElementById) {
+            navRoot = document.getElementById("ul1");
+            for (i=0; i<navRoot.childNodes.length; i++) {
+                  node = navRoot.childNodes[i];
+                  if (node.nodeName=="LI") {
+                        node.onmouseover=function() {
+                              this.className+=" over";
+                        }
+                        node.onmouseout=function() {
+                              this.className=this.className.replace(" over", "");
+                        }
+                  }
+            }
+      }
+}
+window.onload=startList;
+</script>
+</HEAD>        
+<BODY BottomMargin=0 text=Black color=#ffffff style="background:url('images/up.jpg') top center no-repeat;" topmargin="0" leftmargin="0">
+<table cellspacing="0" align=center cellpadding="0" width=90% border=0 height=100% >
+<tr><td height=100% background="images/cornerl.gif">&nbsp;</td>
+<td><table border=0 style="background:url('images/dronslogo.gif') top right no-repeat;" cellspacing="0" cellpadding="0">
+<tr><td valign=top>
+<table width=100% border=0 cellspacing="0" cellpadding="3"><br>
+<center><img src="images/dron_small.gif" width=100 height=98 border=0></center>
+<br>
+<? include("menu.txt");?>
+</table></td>
+<td>
+<table border=0 style="background:url('images/line.gif') top left no-repeat;" cellspacing="4" cellpadding="4">
+<tr>
+<td style="padding-top:20px" height=100% valign=top>
+
+<br><br>
+<b><a href="index.htm"><u>Уроки по DGLEngine</u></a> &#151;> "2D Спрайты"</b><br><br>
+
+<p>Продолжаю серию статей про DGLEngine, вот уже третья. В&nbsp;ней я&nbsp;постараюсь разъяснить, как реализовывать простую спрайтовую анимацию и&nbsp;вообще мы начнем писать небольшую игру. Что бы не сильно заморачиваться, возьмем и&nbsp;сделаем простую горизонтальную космическую леталку-стрелялку. Нам потребуется немного графики, а&nbsp;именно: звездное небо, самолет, плазма и&nbsp;взрыв (вся графика лежит в&nbsp;примере к&nbsp;статье, ссылка на который как всегда –&nbsp;внизу). Все, можно начинать.<br />Для начало нарисуем звездное небо, для этого грузим текстуру неба (не забудь дописать в&nbsp;var еще одну перемену –&nbsp;&bdquo;Space&ldquo;):<br />Space:=LoadTextureFromFile(&#146;Dataspace.bmp&#146;);<br />Оставляем детальность текстуры и&nbsp;цвет прозрачности по умолчанию, так процедура выглядит несколько аккуратнее. Затем рисуем звездное небо, для этого нам просто надо растянуть текстуру на весь экран, хотя можно и&nbsp;замостить экран, нарисовав картинку фона несколько раз. Но я&nbsp;решил как проще, вот так:<br />DrawTexture2D_Simple(Space,0,0,640,480);<br />Ну что же, теперь добавляем управляемый игроком кораблик. Загружаем текстуру корабля:<br />SpaceShip:=LoadTextureFromFile(&#146;DataShip.bmp&#146;,TEXDETAIL_BEST,TRANSCOLOR_AQUA);<br />Последний параметр в&nbsp;строчке выше показывает, что прозрачным цветом текстуры будет AQUA, в&nbsp;качестве параметра можно задавать любой цвет в&nbsp;шестнадцатиричной кодировке, например: $FFA010.<br />Что бы наш код выглядел и&nbsp;читался лучше, создадим еще один юнит (File => New => Unit), сохраним его, озаглавив &laquo;GameTypes.pas&raquo;. В&nbsp;этот юнит перенесем и&nbsp;переменную указывающую на текстуру звездолета (&laquo;SpaceShip&raquo;). Далее добавим в&nbsp;юнит несколько переменных, вспомогательных функций и&nbsp;две процедуры, обсчета и&nbsp;отрисовки корабля игрока, после этого юнит должен выглядеть так:<br />unit GameTypes;<br /><br />interface<br />uses DGLEngine_header;<br /><br />type TRect =&nbsp;record X,Y,Width,Height :&nbsp;integer; end;<br /><br />var SpaceShip :&nbsp;Cardinal;<br />PlayerX :&nbsp;integer;<br />PlayerColRect :&nbsp;Trect;<br /><br />procedure DrawPlayer;<br />procedure ProcessPlayer;<br /><br />implementation<br /><br />function Rect(X,Y,W,H :&nbsp;integer):TRect; begin result.X:=X; result.Y:=Y; result.Width:=W; result.Height:=H; end;<br /><br />procedure DrawPlayer;<br />begin<br />DrawTexture2D_Simple(SpaceShip,PlayerX,410,64,64);<br />end;<br /><br />procedure ProcessPlayer;<br />begin<br />if IsKeyPressed(Key_Left) then dec(PlayerX,4);<br />if IsKeyPressed(Key_Right) then inc(PlayerX,4);<br /><br />if PlayerX>=640-64 then PlayerX:=640-64;<br />if PlayerX<=0 then PlayerX:=0;<br /><br />PlayerColRect:=Rect(PlayerX,410,64,64);<br /><br />end;<br /><br />end.<br />Надеюсь, что этот код вопросов не вызовет, хочу только пояснить, что переменная &laquo;PlayerColRect&raquo; &#151; пригодится нам в&nbsp;будущем, в&nbsp;этой переменной находится информация о&nbsp;&laquo;коробке&raquo; с&nbsp;которой будут обсчитываться столкновения в&nbsp;игре.<br />Теперь нам надо не забыть задать начальное значение переменной &bdquo;PlayerX&ldquo;, где либо перед стартом движка и&nbsp;добавить вызовы процедур отрисовки и&nbsp;обсчета игрока в&nbsp;глобальные процедуры отрисовки и&nbsp;обсчета движка. Теперь можно запустить программу и&nbsp;посмотреть, что получилось.<br />Дальше сделаем так, что бы наш самолетик начал стрелять. Собственно, вот самое –&nbsp;оно, мы начинаем делать спрайты, правда пока что они не анимированные. Спрайты можно делать несколькими способами, можно воспользоваться готовым спрайтовым движком (для DGLE надо скачивать отдельно), можно описать класс спрайта, но я&nbsp;считаю более рациональным создавать какой –&nbsp;либо тип, для каждого объекта в&nbsp;игре (типа спрайта) –&nbsp;свой. Затем делать динамический массив этого типа. Если пока это непонятно, то надеюсь, сейчас на примеры с&nbsp;этим разберемся. Итак, сейчас я&nbsp;опишу тип пули, в&nbsp;нашем случае плазмы, выглядеть он будет так:<br />type TPlasma =&nbsp;record<br />Active :&nbsp;boolean;<br />X,Y,Angle :&nbsp;integer;<br />ColRect :&nbsp;Trect;<br />end;<br />Значение переменных поймешь дальше, по ходу.<br />Теперь, добавим описание массива:<br />Plasma :&nbsp;array of TPlasma;<br />И не забудем обнулить его перед стартом движка, вот так:<br />SetLength(Plasma,0);<br />Естественно, для каждого спрайта нужно описать, как минимум 3&nbsp;процедуры: создание, отрисовку и&nbsp;обсчет. Этим и&nbsp;займемся, сперва, конечно, опишем создание:<br /><br />procedure CreatePlasma(X,Y :&nbsp;integer);<br />var i&nbsp;: integer;<br />begin<br />if length(Plasma)<>0 then //Исключаем ошибку цикла, если массив пуст<br />for i:=0 to length(Plasma)-1 do<br />if not Plasma[i].Active then //Если массив не пуст, то ищим вдруг какая-либо ячейка &#151; пуста<br />begin<br />Plasma[i].Active:=true;<br />Plasma[i].X:=X;<br />Plasma[i].Y:=Y;<br />Plasma[i].Angle:=0;<br />Plasma[i].Colrect:=Rect(X,Y,64,64);<br />Exit; //Если нашли пустую ячейку и&nbsp;записали в&nbsp;нее данные о&nbsp;новом спрайте, то выходим из процедуры<br />end;<br /><br />SetLength(Plasma,length(Plasma)+1); //Если пустых ячеек нет, то увеличиваем массив на 1<br />Plasma[length(Plasma)-1].Active:=true;<br />Plasma[length(Plasma)-1].X:=X;<br />Plasma[length(Plasma)-1].Y:=Y;<br />Plasma[length(Plasma)-1].Angle:=0;<br />Plasma[length(Plasma)-1].Colrect:=Rect(X,Y,64,64);<br /><br />end;<br /><br />Теперь пишем процедуры обсчета и&nbsp;отрисовки:<br />procedure ProcessPlasma;<br />var i&nbsp;: integer;<br />begin<br />for i:=0 to Length(Plasma)-1 do<br />if Plasma[i].Active then<br />begin<br />if Plasma[i].Y<0 then Plasma[i].Active:=false;<br />Plasma[i].Y:=Plasma[i].Y-10;<br />Plasma[i].Colrect:=Rect(Plasma[i].X,Plasma[i].Y,64,64);<br />Plasma[i].Angle:=Plasma[i].Angle+5;<br />end;<br />end;<br /><br />procedure DrawPlasma;<br />var i&nbsp;: integer;<br />begin<br />for i:=0 to Length(Plasma)-1 do<br />if Plasma[i].Active then<br />DrawTexture2D(PlasmaTexture,Plasma[i].X,Plasma[i].Y,64,64,Plasma[i].Angle,170,$FF0000,true);<br />end;<br /><br />Вот так, теперь надо не забыть загрузить текстуру для плазмы. Обрати внимание, что при отрисовке плазмы последний параметр (Diffuse), стоит в&nbsp;TRUE. Это по тому, что мы будем грузить плазму, как альфаканал (черно-белую) картинку, а&nbsp;параметр &bdquo;Diffuse&ldquo; означает, что прозрачность для текстуры будет устанавливаться не по &bdquo;Transparent color&ldquo;, а&nbsp;методом чем чернее –&nbsp;тем прозрачнее. В&nbsp;итоге получаем разную степень прозрачности для различных пикселей картинки. Загрузка же текстуры плазмы будет выглядеть вполне стандартно, вот так:<br />LoadTexture(&#146;DataPlasma.bmp&#146;,PlasmaTexture);<br />Теперь –&nbsp;последний штрих добавим процедуры обсчета и&nbsp;отрисовки плазмы в&nbsp;глобальные процедуры обсчета и&nbsp;отрисовки движка. И&nbsp;в процедуру обсчета игрока допишем вот это:<br />if (IsKeyPressed(Key_Space)) and (waitshot>20) then<br />begin<br />waitshot:=0;<br />CreatePlasma(PlayerX,410);<br />end;<br />inc(WaitShot);<br />Тут появилась новая, необъявленная переменная, зачем она? Эта переменная типа integer нужна для того, что бы делать определенные интервалы между выстрелами кораблика, если игрок зажмет пробел. Так что добавляй эту переменную в&nbsp;var и&nbsp;не забудь присвоить ей значение 0&nbsp;до старта движка.<br />Ну все &#151; запускай, а&nbsp;для меня на сегодня хватит, в&nbsp;следующей статье поговорим об 2D анимации.<br /><br /><b><a href="files/tutorial3.rar" target="_blank">Скачать пример из статьи [91Kb] </a></b></p>
+
+
+
+<br>
+<center><img src="images/stop.gif" width=60 height=57 border=0></center><br>	
+</td><tr>                      
+<td colspan=2 align=right><img src="images/ugol.gif" width=45 height=49 border=0></td></tr>
+</table>
+</td></tr>
+</table></td>
+<td height=100% width=50 background="images/cornerr.gif">&nbsp;</td>
+<? include("copy.txt");?>
+<td height=1 width=50 background="images/cornerr.gif">&nbsp;</td></tr>
+</tr></table>
+</BODY>
+</HTML>

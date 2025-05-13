@@ -1,0 +1,104 @@
+<HTML>
+<HEAD>
+    <TITLE>DRON_PROGS</TITLE> 
+<META content="text/html; charset=WINDOWS-1251" http-equiv=Content-Type>                     
+<META name="author" content="DRON">
+<META name="keywords" content="программирование, программирование игр, gamedev, Delphi, Java, J2ME, C#, C++, mono, tao, фото, engine, 3d, полезные программы, звук, графика, коды, DirectX, OpenGL, библиотеки, компоненты, как создать игру, движок, движок на Delphi, DRON, Коротков Андрей, скачать, примеры, исходники, source, OpenGL Engine, 3D, анимированные модели, max, Power Draw, Asphyre, DelphiX, обучение, dglengine, бесплатно, ролевая игра, RPG, стрелялка, shooter, games, статьи, помощь"> 
+<META name="description" content="Обитель DRON'а. Программирование на Delphi, C#, C++ и J2ME. Gamedev: 2D/3D, статьи, исходники, примеры, движки."> 
+<style type="text/css">
+#menu_body{background:#808080;width:140px}
+#menu_body ul li{list-style-type:none;border-bottom:1px solid #fff;margin-left:-40px;padding-left:7px}
+#menu_body ul li a{color:#fff;font-family:verdana,arial,sans-serif;text-decoration:none}
+#menu_body ul li ul li{border:0;list-style-type:square;color:#fff;list-style-position:inside}
+#menu_body ul li ul{border-top:1px solid #fff;margin-left:-7px;padding-left:50px}
+#menu_body li ul{display:none}
+#menu_body li:hover ul, #menu_body li.over ul{display: block}
+
+body,td,th {
+	font-family:  tahoma, Arial, Helvetica;
+	font-size: 11px;
+	color: Black;
+	text-decoration:none;
+}
+body {
+	background-color: White;
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	text-decoration:none;
+}
+a:link {
+	color: Black;
+	text-decoration:none;
+}
+a:visited {
+	color: Black;
+	text-decoration:none;
+}
+a:hover {
+	color: Gray;
+	text-decoration:underline;
+}
+a:active {
+	color: Gray;
+	text-decoration:none;
+}
+</style>
+
+<script type="text/javascript">
+startList = function() {
+      if (document.all&&document.getElementById) {
+            navRoot = document.getElementById("ul1");
+            for (i=0; i<navRoot.childNodes.length; i++) {
+                  node = navRoot.childNodes[i];
+                  if (node.nodeName=="LI") {
+                        node.onmouseover=function() {
+                              this.className+=" over";
+                        }
+                        node.onmouseout=function() {
+                              this.className=this.className.replace(" over", "");
+                        }
+                  }
+            }
+      }
+}
+window.onload=startList;
+</script>
+</HEAD>        
+<BODY BottomMargin=0 text=Black color=#ffffff style="background:url('images/up.jpg') top center no-repeat;" topmargin="0" leftmargin="0">
+<table cellspacing="0" align=center cellpadding="0" width=90% border=0 height=100% >
+<tr><td height=100% background="images/cornerl.gif">&nbsp;</td>
+<td><table border=0 style="background:url('images/dronslogo.gif') top right no-repeat;" cellspacing="0" cellpadding="0">
+<tr><td valign=top>
+<table width=100% border=0 cellspacing="0" cellpadding="3"><br>
+<center><img src="images/dron_small.gif" width=100 height=98 border=0></center>
+<br>
+<? include("menu.txt");?>
+</table></td>
+<td>
+<table border=0 style="background:url('images/line.gif') top left no-repeat;" cellspacing="4" cellpadding="4">
+<tr>
+<td style="padding-top:20px" height=100% valign=top>
+
+<br><br>
+<b><a href="index.htm"><u>Уроки по DGLEngine</u></a> &#151;> "Введение в DGLEngine"</b><br><br>
+
+<p>Эта статья открывает серию статей, посвященных написанию игр на моем движке, который можно скачать отсюда. Т.к. в&nbsp;настоящее время у&nbsp;движка даже нет нормального хелпа, а&nbsp;в примерах тоже разобраться не так то просто, то я&nbsp;думаю что от этих статей будет определенная польза.<br />Сам движок представляет собой очень мощный инструмент для создания как 2D, так и&nbsp;3D игр, но начнем все же с&nbsp;2D, т.к. оно более понятно и&nbsp;очевидно. В&nbsp;любом случае, сначало нужно научиться его грамотно инициализировать, итак начнем.<br /><br />Предположим, что у&nbsp;нас нет ничего кроме Delphi, DLL движка и&nbsp;его заголовочного файла. Первое, что надо сделать: это запустить Delphi и&nbsp;убрать форму, т.к. движок создает свое окно, то форма нам не нужна. Самый простой способ создать приложение без формы это сначала создать консольное приложение (File => New => Console Application), а&nbsp;затем просто удалить вторую строчку (&bdquo;{$APPTYPE CONSOLE}&ldquo;), которая указывает Delphi, что приложение &#151; консольное. Теперь сохраняем проект в&nbsp;какую либо папку, затем переносим в&nbsp;туже папку &bdquo;DGLEngine_header.pas&ldquo; и&nbsp;DLL движка. Теперь нажимаем на панели инструментов Delphi (та, что вверху) кнопочку с&nbsp;плюсиком (Add file to project) и&nbsp;в появившемся диалоге указываем хедер движка. <br />Т.к. движок теперь динамический делаем так:<br />1) Указываем путь до ДЛЛ:<br />uses<br />  DGLEngine_header in &#146;..DGLEngineDGLEngine_header.pas&#146;; //путь к&nbsp;хедеру<br /><br />2) if LoadDGLEngineDLL(&#146;..DGLEngineDGLEngine.dll&#146;) then //путь к&nbsp;длл<br />  &nbsp; begin<br />  &nbsp; Здесь будем регистрировать наши процедуры (см. как это сделать далее по тексту)<br />  &nbsp; end;<br /><br />Стоит отметить, что когда путь до DLL указан таким образом, то при запуске приложения Windows будет сначала искать DLL рядом с&nbsp;исполняемым экзешником, затем в&nbsp;папке &bdquo;WindowsSystem&ldquo;, а&nbsp;затем уже в&nbsp;&bdquo;WindowsSystem32&ldquo;, и&nbsp;лишь не найдя ее нигде выдаст ошибку и&nbsp;закроет приложение. Теперь можно подумать о&nbsp;том, как сделать иконку на наш экзешник, это не так просто, как в&nbsp;приложении с&nbsp;формой т.к. стандартный (Project => Options => Application) в&nbsp;данном случае не доступен. Как мне кажется проще всего создать обычное приложение дельфи с&nbsp;форомой, зайти в&nbsp;этот самый (Project => Options => Application), установить там иконку, описание продукта: автора, версию и&nbsp;прочее. Затем сохранить проект во временную папку, после этого извлечь из папки куда мы сохранили проект &bdquo;Project1.res&ldquo;. Перенести его в&nbsp;папку к&nbsp;нашему проекту, после чего временную папку можно смело удалить. И&nbsp;дописать после описания &bdquo;uses&ldquo; –&nbsp;&bdquo;{$R Project1.res}&ldquo;. Теперь создаем четыре чистые процедуры: Init, Draw и&nbsp;Process и&nbsp;Free. Это будут основные процедуры игры. Теперь после описанных процедур и&nbsp;begin’а программы начинаем писать инициализацию движка. Первым делом мы должны указать движку эти три процедуры, передав ему их адреса памяти. Делается это так, пишем:<br />RegProcedure(PROC_DRAW,@Draw);<br />RegProcedure(PROC_PROCESS,@Process);<br />RegProcedure(PROC_INIT,@init);<br />RegProcedure(PROC_FREE,@Free);<br />Затем мы должны указать скорость таймера или сколько раз в&nbsp;секунду будет вызываться процедура &bdquo;Process&ldquo;.<br />SetGameProcessInterval(25);<br />25 –&nbsp;это интервал в&nbsp;миллисекундах, т.е. процедура обсчета будет вызываться 40 раз в&nbsp;секунду. Процедура же отрисовки (&bdquo;Draw&ldquo;) вызывается так часто, как позволяет железо. Дальше устанавливаем стартовые параметры движка. Пусть наша игра будет работать в&nbsp;разрешение 640*480, 32-х битном цвете, полноэкранном режиме, частоту монитора оставим на усмотрение Windows, вертикальную синхронизацию выключим, выключим использование движком конфигурационного файла и&nbsp;разрешим ему вести лог. Все это будет выглядеть вот так:<br />SetEngineInitParametrs(640,480,32,0,TRUE,FALSE,FALSE,TRUE);<br />Теперь расскажу отдельно о&nbsp;каждом параметре этой процедуры. Ну с&nbsp;разрешением и&nbsp;глубиной цвета я&nbsp;думаю и&nbsp;так все понятно. Частота монитора стоит –&nbsp;0, это значит что Windows выставит ту частоту, которая установлена по умолчанию для этого разрешения, что бы частота выставлялась корректно монитор в&nbsp;системе должен быть правильно установлен, если выставленная вручную частота монитором не поддерживается, то движок просто перейдет в&nbsp;оконный режим. Следующий параметр указывает что работать мы будем в&nbsp;полноэкранном режиме, если выставить оконный режим, то разрешение –&nbsp;будет указывать размеры окна, а&nbsp;глубина цвета и&nbsp;герцовка монитора будут теми же, что в&nbsp;данный момент на рабочем столе. Следующий параметр –&nbsp;это вертикальная синхронизация, нужна для того что бы при больших значениях FPS нижняя и&nbsp;верхняя часть картинки не расслаивались. Т.е. видеоадаптер ждет момента обновления монитора и&nbsp;в этот же время рисует картинку на экран, в&nbsp;итоге FPS сильно падает, так что включать вертикальную синхронизацию по умолчанию я&nbsp;не рекомендую. Следующий параметр указывает, будет ли движок читать и&nbsp;записывать настройки в&nbsp;ini файл, если он стоит в&nbsp;true, то рядом с&nbsp;exe появится файл &bdquo;Settings.ini&ldquo;, куда будут записаны текущие настройки движка, а&nbsp;при следующем своем старте, если файл уже создан, движок просто будет устанавливать те параметры, которые прописаны в&nbsp;ини файле. Ну и&nbsp;последний параметр, указывает будет ли движок вести лог файл или нет, в&nbsp;процессе разработки игры рекомендую его не отключать, т.к. движок &laquo;проглатывает&raquo; многие ошибки и&nbsp;продолжает работать, но запись о&nbsp;них всегда остается в&nbsp;логе и&nbsp;при возникновение каких либо проблем, можно быстро установить место краха.<br />Теперь, пожалуй осталось написать еще одну процедуру, которая создает движок и&nbsp;окно:<br />StartEngine;<br />Но, для порядку нам нужно написать еще одну строчку в&nbsp;процедуру &bdquo;Process&ldquo;, что бы не пришлось выходить из запущенной в&nbsp;полноэкранном режиме программы комбинацией Alt+F4, а&nbsp;будет она:<br />if IsKeyPressed(Key_Escape) then QuitEngine;<br />Смысл этой строчки кода я&nbsp;думаю понятен и&nbsp;так, по этому комментировать его не буду. Перед созданием движка (&bdquo;StartEngine;&bdquo;), можно добавить еще одну процедуру, которая поменяет заголовок окна:<br />ApplicationName(&#146;Пример&#146;);<br />Все теперь можно нажимать F9 и&nbsp;проверить, все ли мы правильно сделали. Свидетельством того, что движок работал нормально будет созданный им лог файл, примерно такого содержания:<br /><br />[25.06.2006&#124;15:31:16] DGLEngine Version 1.0a Started&hellip;<br />Build: v1.00a,25.04.2006,23:50<br />http://dronprogs.mirgames.ru<br />--System Information--<br />Windows version: 5.1<br />CPU  &nbsp;   &nbsp;   &nbsp; : AMD Athlon&trade; 64 Processor 2800+ <br />RAM Available  :&nbsp;399Mb<br />RAM Total  &nbsp;   :&nbsp;1024Mb<br />Video device  &nbsp;: GeForce 6600/AGP/SSE2/3DNOW!<br />OpenGL  &nbsp;   &nbsp;  :&nbsp;2.0.1 (NVIDIA Corporation)<br />Maximum texture resolution:4096x4096<br />Maximum multytexturing layers:4<br />----------------------<br />Engine created.<br />Fullscreen Mode:640X480X32 Windows define monitor friquency.<br />VSync is Off.<br />Avarage FPS:1174<br />[15:31:22] Engine Closed.<br /><br />
+<b><a href="files/tutorial1.rar" target="_blank">Скачать пример из статьи [13Kb] </a></b></p>
+
+
+
+<br>
+<center><img src="images/stop.gif" width=60 height=57 border=0></center><br>	
+</td><tr>                      
+<td colspan=2 align=right><img src="images/ugol.gif" width=45 height=49 border=0></td></tr>
+</table>
+</td></tr>
+</table></td>
+<td height=100% width=50 background="images/cornerr.gif">&nbsp;</td>
+<? include("copy.txt");?>
+<td height=1 width=50 background="images/cornerr.gif">&nbsp;</td></tr>
+</tr></table>
+</BODY>
+</HTML>

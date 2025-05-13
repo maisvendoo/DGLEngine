@@ -1,0 +1,3 @@
+Îòêðûâàåøü õåäåð, æìåøü Ctrl-R è óêàçûâàåøü çàìåíÿòü PChar íà PAnsiChar, âî âñåì òåêñòå. Ïîòîì òî æå ñàìîå äëÿ string->AnsiString. Âñå.
+Ïîäðîáíåå ñìîòðè ïî ññûëêå
+http://forum.mirgames.ru/index.php?showtopic=6271

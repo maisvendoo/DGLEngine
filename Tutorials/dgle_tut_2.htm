@@ -1,0 +1,105 @@
+<HTML>
+<HEAD>
+    <TITLE>DRON_PROGS</TITLE> 
+<META content="text/html; charset=WINDOWS-1251" http-equiv=Content-Type>                     
+<META name="author" content="DRON">
+<META name="keywords" content="программирование, программирование игр, gamedev, Delphi, Java, J2ME, C#, C++, mono, tao, фото, engine, 3d, полезные программы, звук, графика, коды, DirectX, OpenGL, библиотеки, компоненты, как создать игру, движок, движок на Delphi, DRON, Коротков Андрей, скачать, примеры, исходники, source, OpenGL Engine, 3D, анимированные модели, max, Power Draw, Asphyre, DelphiX, обучение, dglengine, бесплатно, ролевая игра, RPG, стрелялка, shooter, games, статьи, помощь"> 
+<META name="description" content="Обитель DRON'а. Программирование на Delphi, C#, C++ и J2ME. Gamedev: 2D/3D, статьи, исходники, примеры, движки."> 
+<style type="text/css">
+#menu_body{background:#808080;width:140px}
+#menu_body ul li{list-style-type:none;border-bottom:1px solid #fff;margin-left:-40px;padding-left:7px}
+#menu_body ul li a{color:#fff;font-family:verdana,arial,sans-serif;text-decoration:none}
+#menu_body ul li ul li{border:0;list-style-type:square;color:#fff;list-style-position:inside}
+#menu_body ul li ul{border-top:1px solid #fff;margin-left:-7px;padding-left:50px}
+#menu_body li ul{display:none}
+#menu_body li:hover ul, #menu_body li.over ul{display: block}
+
+body,td,th {
+	font-family:  tahoma, Arial, Helvetica;
+	font-size: 11px;
+	color: Black;
+	text-decoration:none;
+}
+body {
+	background-color: White;
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	text-decoration:none;
+}
+a:link {
+	color: Black;
+	text-decoration:none;
+}
+a:visited {
+	color: Black;
+	text-decoration:none;
+}
+a:hover {
+	color: Gray;
+	text-decoration:underline;
+}
+a:active {
+	color: Gray;
+	text-decoration:none;
+}
+</style>
+
+<script type="text/javascript">
+startList = function() {
+      if (document.all&&document.getElementById) {
+            navRoot = document.getElementById("ul1");
+            for (i=0; i<navRoot.childNodes.length; i++) {
+                  node = navRoot.childNodes[i];
+                  if (node.nodeName=="LI") {
+                        node.onmouseover=function() {
+                              this.className+=" over";
+                        }
+                        node.onmouseout=function() {
+                              this.className=this.className.replace(" over", "");
+                        }
+                  }
+            }
+      }
+}
+window.onload=startList;
+</script>
+</HEAD>        
+<BODY BottomMargin=0 text=Black  color=#ffffff style="background:url('images/up.jpg') top center no-repeat;" topmargin="0" leftmargin="0">
+<table cellspacing="0" align=center cellpadding="0" width=90% border=0 height=100% >
+<tr><td height=100% background="images/cornerl.gif">&nbsp;</td>
+<td><table border=0 style="background:url('images/dronslogo.gif') top right no-repeat;" cellspacing="0" cellpadding="0">
+<tr><td valign=top>
+<table width=100% border=0 cellspacing="0" cellpadding="3"><br>
+<center><img src="images/dron_small.gif" width=100 height=98 border=0></center>
+<br>
+<? include("menu.txt");?>
+</table></td>
+<td>
+<table border=0 style="background:url('images/line.gif') top left no-repeat;" cellspacing="4" cellpadding="4">
+<tr>
+<td style="padding-top:20px" height=100% valign=top>
+
+<br><br>
+<b><a href="index.htm"><u>Уроки по DGLEngine</u></a> &#151;> "2D шрифты, текстуры, консоль"</b><br><br>
+
+<p>2D шрифты, текстуры, консоль <br />Итак, из предыдущей статьи мы научились грамотно инициализировать DGLEngine, теперь надо попробовать, что-либо нарисовать с&nbsp;его помощью. Самое простое –&nbsp;это, конечно, нарисовать линию или даже точку, но мы не будем этим заниматься, т.к. в&nbsp;примерах к&nbsp;движку все это показано. А&nbsp;мы же попробуем сейчас создать, загрузить шрифт и&nbsp;что-либо написать на экране. Что бы создать шрифт, нужно воспользоваться утилитой (FontGen) из комплекта поставки движка, как с&nbsp;ее помощью создать текстуру шрифта детально описано в&nbsp;текстовике, который лежит рядом с&nbsp;экзешником утилиты. После того, как сохранишь любой понравившийся тебе шрифт, положи его в&nbsp;ту же папку где и&nbsp;проект или лучше создай дополнительно папку „Data&bdquo; и&nbsp;положи шрифт туда. Шрифт, как и&nbsp;любая другая графика, загружаемая из внешних файлов –&nbsp;это текстура, просто она запакована в&nbsp;некий внутренний формат движка, где плюс к&nbsp;картинке (BMP), хранятся так же размеры всех букв. А&nbsp;это налагает определенные ограничения. Ты, наверное, заметил, что в&nbsp;утилите FontGen размеры текстуры шрифта четны, стандартны (64, 256, 512 и&nbsp;1024), но об этом —&nbsp;ниже. Текстура –&nbsp;это не простая картинка, она должна быть адаптирована для корректного восприятия 3D ускорителем (видеокартой). Фактически –&nbsp;движок накладывает на текстуру только одно ограничение –&nbsp;это ее размер. У&nbsp;видеокарты есть ограничение на разрешение текстур, 3D ускорители первого поколения, вроде DimondMonster3D и&nbsp;прочие, не воспринимали текстуры с&nbsp;разрешением выше 256*256 пикселей, затем это число перманентно росло. Нынешние видеокарты работают с&nbsp;текстурами 4096*4096(максимальный размер текстур, который поддерживает твоя видеокарта можно посмотреть в&nbsp;логе который создает движок), но при обилие подобных текстур видеопамять перегружается и&nbsp;начинаются тормоза, тем более что до сих пор есть интегрированные карточки, для которых пределом остается 1024*1024, а&nbsp;раз мы хотим что бы наша игра работала нормально, на большинстве машин, то это нельзя оставлять без внимания. Ты наверное заметил, что размер текстур это 2&nbsp;в N-ой степени, это обусловлено технологией видеокарт и&nbsp;компьютеров в&nbsp;целом, но нас это сейчас не интересует, а&nbsp;говорю я&nbsp;все это к&nbsp;тому, что например имея картинку с&nbsp;разрешением 85*40, движок ее нормально загрузит, а&nbsp;вот у&nbsp;видеокарты с&nbsp;ней могут возникнуть проблемы (хотя в&nbsp;последней версии движка текстура просто масштабируется до нужных размеров, но при этом немного теряется качество), во-первых, текстура может отображаться криво (что бывает крайне редко), во-вторых, на экране рисунок будет размыт (это относится только к&nbsp;2D, для 3D (моделей и&nbsp;объектов) можно в&nbsp;принципе использовать текстуры любого размера). Это опять же обусловлено железом. Что бы избежать ненужных проблем и&nbsp;сделать изображение четким, просто увеличиваем картинку до ближайших размеров кратных двойке в&nbsp;какой-либо степени, т.е. в&nbsp;нашем случае 128*64. Затем заполняем образовавшееся пустое пространство тем цветом, который у&nbsp;нас будет прозрачный (transparent color) и&nbsp;все. Большие картинки, например фоны в&nbsp;разрешение 1024*768 и&nbsp;более рационально разбивать на несколько более маленьких, например в&nbsp;разрешение 256*256 или 512*512 (я считаю это разрешение наиболее оптимальным). Сейчас я&nbsp;немного разъясню про функцию загрузки текстур. <br />var tex :&nbsp;cardinal;<br />…<br />procedure Init;<br />begin<br />  &nbsp;tex:=LoadTextureFromFile(&#146;Datatex.bmp&#146;);<br />end;<br />Мы объявили переменную и&nbsp;в разделе инициализации загрузили текстуру из файла. (примечание редактора –&nbsp;т.к. статья довольно старая, то сохранение авторского стиля под новую версию движка оказалось невозможным. Возможно в&nbsp;дальнейшем мы просто уберем все старые статьи и&nbsp;перепишем их с&nbsp;нуля)<br />Обратите внимание, что размер текстуры 640Х480 и&nbsp;он не соответствует выше описанным правилам, а&nbsp;если посмотреть в&nbsp;лог файл движка, то мы найдем там следующие строчки:<br />Texture is being scaled to nearest suitable size.<br />Texture &laquo;Datatex.bmp&raquo; loaded successfully.<br />Первая строчка означает, что движок откорректировал размер текстуры и&nbsp;загрузил ее нормально.<br />Ну а&nbsp;так как для шрифтов в&nbsp;движке предусмотрена отдельная загрузка, то наш код будет выглядеть вот так:<br />Font:=LoadFontFromFile(’font.dft’);<br />Этим одом мы загрузили шрифт присвоив ему идентификатор.<br />Теперь попробуем вывести текст на экран, для примера выведем в&nbsp;правый верхний угол текущие значение FPS, выглядеть это будет так:<br />procedure Draw;<br />begin<br />Begin2D;<br /> DrawTexture2D_Simple(tex,0,0,640,480);<br /> DrawText2D(Font,10,10,&#146;FPS: &#146;+IntToStr(GetFPS),$FFFFFF,200);<br />End2D;<br />end;<br />Текст, как и&nbsp;любая из процедур для работы с&nbsp;2D вызывается между процедурами „Begin2D&bdquo; и&nbsp;„End2D&bdquo;. Сейчас немного поясню процедуру „DrawText2D&bdquo;. Первый ее параметр это идентификатор текстуры шрифта, ему естественно уже должна быть присвоена загруженная в&nbsp;память текстура шрифта. Дальше идут две координаты X,Y, выводимый текст и&nbsp;цвет шрифта, с&nbsp;этим я&nbsp;думаю вопросов не возникает. Затем идет Alpha, уровень прозрачности 255 –&nbsp;не прозрачно, 0&nbsp;– абсолютно прозрачно. Следующий параметр это масштаб шрифта 1&nbsp;– как есть, т.е. тот размер с&nbsp;которым мы создавали текстуру. Значения меньше единицы –&nbsp;уменьшают шрифт, больше –&nbsp;увеличивают.<br /><br />Теперь пару слов про консоль. Что такое консоль я&nbsp;думаю, знают все, она очень полезна в&nbsp;процессе разработки, позволяя программисту прямо во время игры поменять какие –&nbsp;либо ключевые параметры или, например, загрузить карту, если соответствующего меню в&nbsp;игре еще попросту нет. Движок предоставляет уже готовую полнофункциональную консоль, что бы ее создать нужно где –&nbsp;либо до создания движка или на его инициализации написать:<br />CreateConsole(Font,0.5,0);<br />Значение первых двух параметров –&nbsp;аналогично тем, что были в&nbsp;процедуре „&nbsp;DrawText2D &bdquo;, а&nbsp;последний параметр –&nbsp;это идентификатор фоновой текстуры консоли, 0&nbsp;– означает, что фон –&nbsp;отсутствует.<br />Далее, нужно зарегистрировать наши команды в&nbsp;консоль. При создании в&nbsp;консоль всегда регистрируется одна команда („cmndlist&bdquo;), она показывает список всех зарегистрированных в&nbsp;консоле команд. Условно все регистрируемые команды делятся на два типа процедуры и&nbsp;целочисленные, для регистрации каждого из типов есть соответствующие процедуры в&nbsp;движке. Что бы зарегистрировать процедуру или целочисленную переменную, нужно дать команде имя и&nbsp;передать адрес процедуры (переменной), для переменных еще нужно обязательно указать ее максимально допустимое и&nbsp;минимальное значение, между которыми она может варьироваться. Сейчас зарегистрируем классическую команду &laquo;quit&raquo;:<br />RegisterCommandProcedure(’quit’,@QuitEngine);<br />Что бы к&nbsp;примеру регистрировать не целочисленные переменные, а&nbsp;переменные String или real (single), можно использовать такой прием:<br />var PlSpeed :&nbsp;single;<br />…<br />procedure ChangePlayerSpeed;<br />begin<br />if GetLastComParam=’’ then AddStringToConsole(‘Текущее значение скорости: ’+floattostr(PlSpeed)) else<br />try<br />PlSpeed:=strtofloat(GetLastComParam);<br />except<br />AddStringToConsole(‘Вы ввели недопустимое значение!’);<br />end;<br />end;<br />…<br />RegisterCommandProcedure(’player_speed’,@ ChangePlayerSpeed);<br />Естественно, этот простой пример можно модернизировать и&nbsp;переделать под свои нужды.<br />Не стоит забывать, что консоль нужно еще выводить на экран и&nbsp;отслеживать ввод текста, для этого в&nbsp;процедуру отрисовки добавляем „&nbsp;DrawConsole; &bdquo; (вызывается после „Begin2D&bdquo;), а&nbsp;в процедуру обсчета („Process&bdquo;) –&nbsp;„ ProcessConsole; &bdquo;. В&nbsp;программе, кто не знает, консоль вызывается клавишей &laquo;тильда&raquo; („~&bdquo;).<br />Все, теперь базовая заготовка для любой игры на движке –&nbsp;готова, в&nbsp;следующей статье мы уже собственно начнем писать сам игровой процесс.<br /><br /><br />
+
+<b><a href="files/tutorial2.rar" target="_blank">Скачать пример из статьи [429Kb] </a></b></p>
+
+
+
+<br>
+<center><img src="images/stop.gif" width=60 height=57 border=0></center><br>	
+</td><tr>                      
+<td colspan=2 align=right><img src="images/ugol.gif" width=45 height=49 border=0></td></tr>
+</table>
+</td></tr>
+</table></td>
+<td height=100% width=50 background="images/cornerr.gif">&nbsp;</td>
+<? include("copy.txt");?>
+<td height=1 width=50 background="images/cornerr.gif">&nbsp;</td></tr>
+</tr></table>
+</BODY>
+</HTML>

@@ -1,0 +1,36 @@
+!!ARBfp1.0
+############################################
+# 	Bump Mapping Pixel Shader 	   #
+# 		  V 1.0			   #
+# For DGLEngine V 1.1,	Author: DRON	   #
+############################################
+ATTRIB texcoord=fragment.texcoord[0];
+ATTRIB lightVec=fragment.texcoord[1];
+ATTRIB viewVec=fragment.texcoord[2];
+PARAM ambient=program.local[0];
+TEMP temp1;
+TEMP temp2;
+TEMP temp3;
+TEMP temp4;
+TEMP temp5;
+TEMP temp6;
+TEMP temp7;
+TEX temp2.xyzw,texcoord,texture[0],2D;
+TEX temp7.xyzw,texcoord,texture[1],2D;
+MAD temp7.xyzw,temp7.xyzw,{2.0,2.0,2.0,1.0},{-1.0,-1.0,-1.0,0.0};
+DP3 temp5.xyzw,lightVec,lightVec;
+RSQ temp4.w,temp5.w;
+MUL temp5.xyzw,lightVec,temp4.w;
+DP3_SAT temp1.xyzw,temp5.xyzw,temp7.xyzw;
+DP3 temp3.w,-viewVec,-viewVec;
+RSQ temp3.w,temp3.w;
+MUL temp3.xyz,temp3.w,-viewVec;
+DP3 temp4.xyzw,temp3.xyzw,temp7.xyzw;
+MUL temp4.xyzw,temp4.xyzw,temp7.xyzw;
+MAD temp4.xyzw,temp4.xyzw,{-2,-2,-2,-2},temp3.xyzw;
+DP3_SAT temp7.xyzw,temp4.xyzw,temp5.xyzw;
+POW temp7.xyzw,temp7.x,{6,6,6,6}.w;
+MUL temp6.w,{0.4,0.4,0.4,0.4}.w,temp7.w;
+MAD temp7.xyzw,temp1.w,temp2.xyzw,temp6.w;
+MAD result.color,ambient.w,temp2.xyzw,temp7.xyzw;
+END

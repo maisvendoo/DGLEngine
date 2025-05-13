@@ -1,0 +1,103 @@
+<HTML>
+<HEAD>
+    <TITLE>DRON_PROGS</TITLE> 
+<META content="text/html; charset=WINDOWS-1251" http-equiv=Content-Type>                     
+<META name="author" content="DRON">
+<META name="keywords" content="программирование, программирование игр, gamedev, Delphi, Java, J2ME, C#, C++, mono, tao, фото, engine, 3d, полезные программы, звук, графика, коды, DirectX, OpenGL, библиотеки, компоненты, как создать игру, движок, движок на Delphi, DRON, Коротков Андрей, скачать, примеры, исходники, source, OpenGL Engine, 3D, анимированные модели, max, Power Draw, Asphyre, DelphiX, обучение, dglengine, бесплатно, ролевая игра, RPG, стрелялка, shooter, games, статьи, помощь"> 
+<META name="description" content="Обитель DRON'а. Программирование на Delphi, C#, C++ и J2ME. Gamedev: 2D/3D, статьи, исходники, примеры, движки."> 
+<style type="text/css">
+#menu_body{background:#808080;width:140px}
+#menu_body ul li{list-style-type:none;border-bottom:1px solid #fff;margin-left:-40px;padding-left:7px}
+#menu_body ul li a{color:#fff;font-family:verdana,arial,sans-serif;text-decoration:none}
+#menu_body ul li ul li{border:0;list-style-type:square;color:#fff;list-style-position:inside}
+#menu_body ul li ul{border-top:1px solid #fff;margin-left:-7px;padding-left:50px}
+#menu_body li ul{display:none}
+#menu_body li:hover ul, #menu_body li.over ul{display: block}
+
+body,td,th {
+	font-family:  tahoma, Arial, Helvetica;
+	font-size: 11px;
+	color: Black;
+	text-decoration:none;
+}
+body {
+	background-color: White;
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	text-decoration:none;
+}
+a:link {
+	color: Black;
+	text-decoration:none;
+}
+a:visited {
+	color: Black;
+	text-decoration:none;
+}
+a:hover {
+	color: Gray;
+	text-decoration:underline;
+}
+a:active {
+	color: Gray;
+	text-decoration:none;
+}
+</style>
+
+<script type="text/javascript">
+startList = function() {
+      if (document.all&&document.getElementById) {
+            navRoot = document.getElementById("ul1");
+            for (i=0; i<navRoot.childNodes.length; i++) {
+                  node = navRoot.childNodes[i];
+                  if (node.nodeName=="LI") {
+                        node.onmouseover=function() {
+                              this.className+=" over";
+                        }
+                        node.onmouseout=function() {
+                              this.className=this.className.replace(" over", "");
+                        }
+                  }
+            }
+      }
+}
+window.onload=startList;
+</script>
+</HEAD>        
+<BODY BottomMargin=0 text=Black color=#ffffff style="background:url('images/up.jpg') top center no-repeat;" topmargin="0" leftmargin="0">
+<table cellspacing="0" align=center cellpadding="0" width=90% border=0 height=100% >
+<tr><td height=100% background="images/cornerl.gif">&nbsp;</td>
+<td><table border=0 style="background:url('images/dronslogo.gif') top right no-repeat;" cellspacing="0" cellpadding="0">
+<tr><td valign=top>
+<table width=100% border=0 cellspacing="0" cellpadding="3"><br>
+<center><img src="images/dron_small.gif" width=100 height=98 border=0></center>
+<br>
+<? include("menu.txt");?>
+</table></td>
+<td>
+<table border=0 style="background:url('images/line.gif') top left no-repeat;" cellspacing="4" cellpadding="4">
+<tr>
+<td style="padding-top:20px" height=100% valign=top>
+
+<br><br>
+<b><a href="index.htm"><u>Уроки по DGLEngine</u></a> &#151;> "Да будет звук"</b><br><br>
+
+<p>Итак очередная статья про движок DGLEngine будет посвящена озвучке. Хоть это процесс простой, но все равно я&nbsp;решил уделить ему пусть даже и&nbsp;несколько строк. В&nbsp;качестве игры, которую будем озвучивать я&nbsp;предлагаю взять, то что мы написали в&nbsp;статье  <strong><a href="dgle_tut_4.html" target="_blank">Столкновения и&nbsp;анимация в&nbsp;2D</a></strong>. Теперь просто добавим в&nbsp;нее музыку и&nbsp;несложный 3D или вернее сказать &#151; стерео звук.<br />Музыка добавляется совсем просто, нужно всего-навсего добавить одну строчку либо в&nbsp;процедуру инициализации движка, либо перед его стартом.<br />PlayMusic(&#146;DataMusic.mid&#146;,TRUE);<br />Таким образом мы просто запускаем музыку в&nbsp;бесконечном цикле. Повторный вызов этой процедуры, но уже с&nbsp;другим именем файла, просто сменит играющую музыку на новую. Для всяческих ухищрений в&nbsp;движке предусмотренно еще несколько команд для работы с&nbsp;музыкой.<br />Итак, теперь займемся озвучко. Сперва, нужно инициализировать DirectSound и&nbsp;загрузить сэмплы. Для этого в&nbsp;процедуре инициализации движка пишем:<br /> DirectSoundInit;<br /> ExploSound:=LoadSample(&#146;Dataexpl.wav&#146;);<br /> PlasmaSound:=LoadSample(&#146;Dataplasma.wav&#146;);<br />Конечно, сами переменные &#151; идентификаторы звуков нужно заранее объявить,причем не в&nbsp;файле проекта, а&nbsp;в каком либо модуле, т.к. переменные объявленные в&nbsp;файле проекта достуаны только в&nbsp;нем. В&nbsp;ручную загруженные звуки при завершении работы движка удалять из памяти &#151; не обязательно, движок это сделает автоматически.<br />Теперь добавим звук выстрела. Будем считать, что &laquo;уши&raquo; игрока находятся в&nbsp;корабле следовательно выстрел он слышит всегда одинаковой нромкости и&nbsp;в центре т.е. в&nbsp;равной степени, как из правой, так и&nbsp;из левой колонки. Находим процедуру, в&nbsp;которой создается выстрел плазмы и&nbsp;добавляем туда вот эту строчку:<br />&hellip;&hellip;&hellip;..<br />procedure CreatePlasma(X,Y :&nbsp;integer);<br />var i&nbsp;: integer;<br />begin<br /><br />SetSampleVolume(PlasmaSound,70);<br />PlaySample(PlasmaSound);<br /><br /> if length(Plasma)<>0 then //Исключаем ошибку цикла, если массив пуст<br />&hellip;&hellip;&hellip;..<br />А вот с&nbsp;озвучкой взрывов будет немного поинтереснее. Мы должны сделать так, что бы позиция источника звука взрыва отсчитывалась относительно игрока, т.е. положения кораблика на экране. Для этого придется написать несложную функцию, которая будет возвращать нужные координаты звука. Начало координат для звуковой системы расположено в&nbsp;центре экрана. Ось Y&nbsp;идет вверх а&nbsp;не вниз как это принято в&nbsp;2D, а&nbsp;ось X&nbsp;&#151; вправо, ось Z&nbsp;&#151; на нас. Теперь пишем функцию и&nbsp;все остальное:<br />procedure CreateExplo(X,Y :&nbsp;integer);<br /><br /> type TSPoint =&nbsp;record X,Y :&nbsp;single; end;<br /><br /> function GetSoundPos :&nbsp;TSPoint;<br /> begin<br /> result.X:=(X-PlayerX){приводим наши координаты к&nbsp;звуковым}/100{- кэффициент определяет громкость};<br /> result.Y:=(410-Y)/25; //Чем ближе взрыв к&nbsp;положению корабля, тем он громче, 25 &#151; кэффициент<br /> end;<br /><br />var i&nbsp;: integer;<br />begin<br /><br />SetSample3DPosition(ExploSound,GetSoundPos.X,GetSoundPos.Y,0.0);<br />PlaySample(ExploSound);<br /><br /> if length(Explosions)<>0 then<br />  for i:=0 to length(Explosions)-1 do<br />&hellip;&hellip;&hellip;..<br />Вот собственно и&nbsp;все, что я&nbsp;хотел поведать по этой теме. Если мидишная музыка слишком бъет по ушам, то ее лучше отключить или заменить миди на любимый MP3 трек.<br /><br /><b><a href="files/tutorial5.rar" target="_blank">Скачать пример из статьи [162Kb] </a></b></p>
+
+
+
+<br>
+<center><img src="images/stop.gif" width=60 height=57 border=0></center><br>	
+</td><tr>                      
+<td colspan=2 align=right><img src="images/ugol.gif" width=45 height=49 border=0></td></tr>
+</table>
+</td></tr>
+</table></td>
+<td height=100% width=50 background="images/cornerr.gif">&nbsp;</td>
+<? include("copy.txt");?>
+<td height=1 width=50 background="images/cornerr.gif">&nbsp;</td></tr>
+</tr></table>
+</BODY>
+</HTML>

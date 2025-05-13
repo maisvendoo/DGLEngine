@@ -1,0 +1,103 @@
+<HTML>
+<HEAD>
+    <TITLE>DRON_PROGS</TITLE> 
+<META content="text/html; charset=WINDOWS-1251" http-equiv=Content-Type>                     
+<META name="author" content="DRON">
+<META name="keywords" content="программирование, программирование игр, gamedev, Delphi, Java, J2ME, C#, C++, mono, tao, фото, engine, 3d, полезные программы, звук, графика, коды, DirectX, OpenGL, библиотеки, компоненты, как создать игру, движок, движок на Delphi, DRON, Коротков Андрей, скачать, примеры, исходники, source, OpenGL Engine, 3D, анимированные модели, max, Power Draw, Asphyre, DelphiX, обучение, dglengine, бесплатно, ролевая игра, RPG, стрелялка, shooter, games, статьи, помощь"> 
+<META name="description" content="Обитель DRON'а. Программирование на Delphi, C#, C++ и J2ME. Gamedev: 2D/3D, статьи, исходники, примеры, движки."> 
+<style type="text/css">
+#menu_body{background:#808080;width:140px}
+#menu_body ul li{list-style-type:none;border-bottom:1px solid #fff;margin-left:-40px;padding-left:7px}
+#menu_body ul li a{color:#fff;font-family:verdana,arial,sans-serif;text-decoration:none}
+#menu_body ul li ul li{border:0;list-style-type:square;color:#fff;list-style-position:inside}
+#menu_body ul li ul{border-top:1px solid #fff;margin-left:-7px;padding-left:50px}
+#menu_body li ul{display:none}
+#menu_body li:hover ul, #menu_body li.over ul{display: block}
+
+body,td,th {
+	font-family:  tahoma, Arial, Helvetica;
+	font-size: 11px;
+	color: Black;
+	text-decoration:none;
+}
+body {
+	background-color: White;
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	text-decoration:none;
+}
+a:link {
+	color: Black;
+	text-decoration:none;
+}
+a:visited {
+	color: Black;
+	text-decoration:none;
+}
+a:hover {
+	color: Gray;
+	text-decoration:underline;
+}
+a:active {
+	color: Gray;
+	text-decoration:none;
+}
+</style>
+
+<script type="text/javascript">
+startList = function() {
+      if (document.all&&document.getElementById) {
+            navRoot = document.getElementById("ul1");
+            for (i=0; i<navRoot.childNodes.length; i++) {
+                  node = navRoot.childNodes[i];
+                  if (node.nodeName=="LI") {
+                        node.onmouseover=function() {
+                              this.className+=" over";
+                        }
+                        node.onmouseout=function() {
+                              this.className=this.className.replace(" over", "");
+                        }
+                  }
+            }
+      }
+}
+window.onload=startList;
+</script>
+</HEAD>        
+<BODY BottomMargin=0 text=Black color=#ffffff style="background:url('images/up.jpg') top center no-repeat;" topmargin="0" leftmargin="0">
+<table cellspacing="0" align=center cellpadding="0" width=90% border=0 height=100% >
+<tr><td height=100% background="images/cornerl.gif">&nbsp;</td>
+<td><table border=0 style="background:url('images/dronslogo.gif') top right no-repeat;" cellspacing="0" cellpadding="0">
+<tr><td valign=top>
+<table width=100% border=0 cellspacing="0" cellpadding="3"><br>
+<center><img src="images/dron_small.gif" width=100 height=98 border=0></center>
+<br>
+<? include("menu.txt");?>
+</table></td>
+<td>
+<table border=0 style="background:url('images/line.gif') top left no-repeat;" cellspacing="4" cellpadding="4">
+<tr>
+<td style="padding-top:20px" height=100% valign=top>
+
+<br><br>
+<b><a href="index.htm"><u>Уроки по DGLEngine</u></a> &#151;> "3DFirstStep"</b><br><br>
+
+<p>Ну вот пора перебраться и&nbsp;в полноценное третье измерение. Для этой цели в&nbsp;движке есть аж два подмодуля &laquo;Graphics 3D&raquo; и&nbsp;&laquo;Advanced Engine Utils&raquo;, второе мы пока трогать не будем, т.к. для не навороченных 3D игрушек вполне хватит первого модуля. Я&nbsp;долго думал какую игру написать бы в&nbsp;качестве примера и&nbsp;решил, что пусть это будет, что бы вы думал? FPS –&nbsp;First Player Shooter, причем это будет на аналог думу2, который идет в&nbsp;примерах с&nbsp;движком, а&nbsp;что то более интересное, хотя конечно и&nbsp;не дум 3&nbsp;<img style="border: 0px; vertical-align: middle;" alt="wink" src="images/smiles/wink.gif" /> Статей будет много и&nbsp;я рассмотрю все, начиная с&nbsp;самого простого и&nbsp;до Light Maps, динамических теней и&nbsp;прочих вкусностей, даже напишем плагин для работой с&nbsp;BSP картами  <img style="border: 0px; vertical-align: middle;" alt="wink" src="images/smiles/wink.gif" />Постараюсь продемонстрировать максимум удобных приемов в&nbsp;написание 3D игр и&nbsp;возможности самого движка. Ну что же, приступим <img style="border: 0px; vertical-align: middle;" alt="smile" src="images/smiles/smile.gif" /><br />Начнем мы, как водится, с&nbsp;малого, возьмем чистую заготовку из папки &bdquo;Template&ldquo; и&nbsp;уже начнем (Если вы не читали предыдущих статей, настоятельно советую их прочитать). Первое что мы сделаем, это загрузим модель рук и&nbsp;оружия, все таки же FPS делаем, а&nbsp;не Sims <img style="border: 0px; vertical-align: middle;" alt="smile" src="images/smiles/smile.gif" /> Выглядеть код будет очень просто, тут все аналогично работе с&nbsp;текстурами:<br />mdl_Arms:=LoadModel(&#146;Dataarms.dmd&#146;,MDL_SCALE_EVERY_FRAME);<br />mdl_Pistol:=LoadModel(&#146;Datapistol.dmd&#146;,MDL_SCALE_EVERY_FRAME);<br />Теперь поясню смысл второго параметра, он указывает на способ масштабирования модели при загрузки. В&nbsp;трехмерном пространстве значения координат в&nbsp;отличие от 2D, это дробные числа и&nbsp;их значения сравнительно мало. К&nbsp;примеру, если ничего не менять сразу в&nbsp;процедуре рендеринга, то на экране координаты будут варьироваться по X&nbsp;от -1.0 до 1.0, и&nbsp;так же по Y. Конечно камеру можно отодвинуть назад по Z&nbsp;и на экран влезет несколько больше, но об этом ниже. А&nbsp;модель в&nbsp;максе бывает выходит своими размерами далеко за 1000, так что естественно перед использованием ее нужно нормализовать, а&nbsp;то она просо не поместится на экране или наоборот будет слишком мелкой. Смысл параметра такой:<br />MDL_NO_SCALE –&nbsp;модель не масштабируется.<br />MDL_SCALE_EVERY_FRAME –&nbsp;каждый кадр анимации модели масштабируется так, что для каждого кадра  просчитывается по какой из 3-х осей модель имеет максимальный размер и&nbsp;относительно этого высчитывается коэффициент масштабирования. Возможно возникновение артифакта дерганья анимации модели, использовать, если в&nbsp;качестве кадров хранятся просто различные модели.<br />MDL_SCALE_GL_ONE –&nbsp;модель грубо подгоняется по всем осям к&nbsp;размеру 1.0, в&nbsp;итоге нарушаются пропорции.<br />MDL_SCALE_BY_LARGEST_FRAME –&nbsp;модель масштабируется аналогично MDL_SCALE_EVERY_FRAME, но коэффициент масштабирования высчитывается один на всю модель, по максимальному кадру –&nbsp;идеально для анимированных персонажей.<br />Так, дальше просто грузим текстуры:<br />tex_Arms:=LoadTextureFromFile(&#146;Databody.jpg&#146;);<br />tex_Pistol:=LoadTextureFromFile(&#146;Datapistol.jpg&#146;);<br />Ну вот, теперь попробуем нарисовать руки перед экраном, но до этого сделаем одну простую вещь, перед созданием движка напишем:<br />SetViewAngle(90);<br />Собственно мы просто установили угол обзора камеры, по умолчанию в&nbsp;двиге он –&nbsp;45 градусов, а&nbsp;для FPS принято –&nbsp;90.<br />Так же нужно установить расстояния от камеры до ближней и&nbsp;дальней секушей плоскости, т.е. ближе ближней и&nbsp;дальше дальней ничего рисоваться не будет.<br />SetCutingPlanes(0.05,100.0);<br />Ну вот, теперь можно заняться отрисовкой. Все трехмерный объекты должны быть заключены между BeginObj3D; и&nbsp;Endobj3D; в&nbsp;этом случае все изменения пространства будут относится только к&nbsp;текущему объекту. А&nbsp;изменения вне этих операторов будут глобальными, т.е. влиять на все, что выводится после. Так же можно создавать вложенные объекты. Теперь, для лучшего понимания происходящего сделаем вот что, напишем в&nbsp;рендеринге следующий код:<br />BeginObj3D;<br />Position3D(0,0,-2);<br />DrawAxes;<br />Endobj3D;<br />Тем самым, мы просто нарисуем координатные оси для текущего объекта. На экране появятся 3&nbsp;линии, красная &#151; вправо, зеленая –&nbsp;вверх и&nbsp;синяя на нас, но мы ее видеть не будем она будет точкой. Эти линии –&nbsp;оси координат, линии направлены вдоль положительного направления оси и&nbsp;имеют единичную длину т.е. 1.0. Красная –&nbsp;X, зеленая –&nbsp;Y и&nbsp;синяя –&nbsp;догадайтесь сам –&nbsp;Z <img style="border: 0px; vertical-align: middle;" alt="smile" src="images/smiles/smile.gif" />. Position3D –&nbsp;нужно вызывать в&nbsp;самом начале, он задает, как вы наверное уже догадались, положения объекта в&nbsp;пространстве. Теперь что бы лучше вникнуть в&nbsp;пространство сдвинем го вот так:<br />Position3D(-0.5,-0.5,-2);<br />Ну вроде надеюсь понятно. Ну что же, настало время наконец то нарисовать руки перед экраном, естественно придется немного поподгонять их позицию, что бы все смотрелось как надо в&nbsp;итоге получится вот что:<br />BeginObj3D;<br />Position3D(0,-0.25,0.1);<br />RotateZ(-90);<br />RotateY(-90);<br />DrawModel(mdl_Arms,0,true);<br />Endobj3D;<br />Надеюсь смысл процедур RotateX/Y/Z объяснять не надо, скажу только что если вы повернули систему координат вокруг оси X, к&nbsp;примеру, то ось Y&nbsp;будет направлена уже совсем не вверх. Для того что бы не запутаться рекомендую использовать процедуру DrawAxes. Теперь можно запустить и&nbsp;посмотреть на модель, а&nbsp;смотрится она конечно как то не очень и&nbsp;не только по тому что сама по себе модель корявая <img style="border: 0px; vertical-align: middle;" alt="smile" src="images/smiles/smile.gif" /> а&nbsp;по тому что на ней нет текстур и&nbsp;мы не включили освещение. Насчет освещения я&nbsp;расскажу потом, пока просто включим источник по умолчанию, его кстати необходимо выключать вручную т.к. источники света распространяются сразу на все модели.<br />BeginObj3D;<br />SetLight();<br />Position3D(0,-0.25,0.1);<br />RotateZ(-90);<br />RotateY(-90);<br />DrawModel(mdl_Arms,0,true);<br />DeactiveLight();<br />Endobj3D;<br />Ну вот, теперь это что то уже более правдоподобное. Сейчас разберем параметры DrawModel, ну с&nbsp;первым все понятно, это иденитификатор модели, второй –&nbsp;номер кадра анимации, а&nbsp;третий –&nbsp;сглаживание, поставьте его значение в&nbsp;false и&nbsp;почувствуйте разницу. Вообще сглаживание нужно отключать только для угловатых моделей, когда мы хотим, что бы они такими и&nbsp;остались. Ну вот теперь цепляем текстуру, для этого есть процедура SetTexture() –&nbsp;она устанавливает текущую текстуру, которая будет натягиваться на все последующие выводимые объекты. Что бы сбросить текстуру на пустую в&nbsp;качестве параметра нужно использовать TEX_BLANK. Теперь напоследок добавим по аналогии в&nbsp;эти самые руки и&nbsp;пистолет, в&nbsp;итоге конечный код будет иметь вид:<br />BeginObj3D;<br /> SetLight();<br /> Position3D(0,-0.25,0.1);<br /> RotateZ(-90);<br /> RotateY(-90);<br /> SetTexture(tex_Arms);<br /> DrawModel(mdl_Arms,0,true);<br /><br /> BeginObj3D;<br />  Position3D(0.9,-0.07,0);<br />  SetTexture(tex_Pistol);<br />  Scale3D(0.3);<br />  DrawModel(mdl_Pistol,0,false);<br /> Endobj3D;<br /><br /> DeactiveLight();<br />Endobj3D;<br />Тут когда мы двигали координаты модели пистолета в&nbsp;роли Z&nbsp;уже выступала координата X, а&nbsp;в роле X&nbsp;– Y. Это произошло из-за того, что мы поворачивали пространство. Ну и&nbsp;Scale3D, как не сложно догадаться –&nbsp;масштабирует модель. Ну вот и&nbsp;пожалуй все для первого раза, покрутите –&nbsp;повертите все, что бы лучше понять что к&nbsp;чему <img style="border: 0px; vertical-align: middle;" alt="cool" src="images/smiles/cool.gif" /><br /><br /><b><a href="files/tutorial7.rar" target="_blank">Скачать пример из статьи [274Kb] </a></b></p>
+
+
+
+<br>
+<center><img src="images/stop.gif" width=60 height=57 border=0></center><br>	
+</td><tr>                      
+<td colspan=2 align=right><img src="images/ugol.gif" width=45 height=49 border=0></td></tr>
+</table>
+</td></tr>
+</table></td>
+<td height=100% width=50 background="images/cornerr.gif">&nbsp;</td>
+<? include("copy.txt");?>
+<td height=1 width=50 background="images/cornerr.gif">&nbsp;</td></tr>
+</tr></table>
+</BODY>
+</HTML>

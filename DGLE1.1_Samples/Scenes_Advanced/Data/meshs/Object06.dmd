@@ -1,0 +1,71 @@
+DMD 2.0
+New object
+TriMesh()
+numverts numfaces
+   6        4
+Mesh vertices:
+	-1.0 -0.0371518 -0.0337744
+	-1.0 0.0371518 -0.0337744
+	1.0 0.0371518 -0.0337744
+	-1.0 -0.0371518 0.0337744
+	-1.0 0.0371518 0.0337744
+	1.0 0.0371518 0.0337744
+end vertices
+Mesh faces:
+	3 2 5
+	5 6 3
+	2 1 4
+	4 5 2
+end faces
+Smooth normals:
+	-1.0 0.0 0.0
+	0.0 1.0 0.0
+	0.0 1.0 0.0
+	-1.0 0.0 0.0
+	0.0 2.0 0.0
+	0.0 1.0 0.0
+end smooth normals
+end mesh
+Material:
+diffuse color
+	149.94 149.94 149.94
+ambient color
+	149.94 149.94 149.94
+specular color
+	229.5 229.5 229.5
+glossiness
+	10.0
+opacity
+	100.0
+diffuse map
+wall_006_diffuse.jpg
+bump map
+	None
+specular map
+	None
+end material
+New Texture:
+numtverts numtvfaces
+   12        4
+Texture vertices:
+	1.875 -0.75 -36.5103
+	-0.875 -0.75 -36.5103
+	-36.5103 -0.75 1.87498
+	1.875 1.75 -36.5103
+	-0.875 1.75 -36.5103
+	-36.5103 1.75 1.87498
+	-36.5103 -0.75 1.87498
+	37.5103 -0.75 1.875
+	37.5103 1.75 1.875
+	37.5103 1.75 1.875
+	-0.875 -0.75 -36.5103
+	1.875 1.75 -36.5103
+end texture vertices
+Texture faces:
+	7 8 9
+	10 6 3
+	11 1 12
+	4 5 2
+end texture faces
+end of texture
+end of file

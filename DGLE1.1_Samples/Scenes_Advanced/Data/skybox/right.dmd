@@ -1,0 +1,38 @@
+New object
+TriMesh()
+numverts numfaces
+   4        2
+Mesh vertices:
+	2000.0 -2000.0 -2000.0
+	2000.0 2000.0 -2000.0
+	2000.0 -2000.0 2000.0
+	2000.0 2000.0 2000.0
+end vertices
+Mesh faces:
+	1 2 4
+	4 3 1
+end faces
+end mesh
+New Texture:
+numtverts numtvfaces
+   12        2
+Texture vertices:
+	0.0 0.0 0.0
+	1.0 0.0 0.0
+	0.0 1.0 0.0
+	1.0 1.0 0.0
+	0.0 0.0 0.0
+	1.0 0.0 0.0
+	0.0 1.0 0.0
+	1.0 1.0 0.0
+	0.0 0.0 0.0
+	1.0 0.0 0.0
+	0.0 1.0 0.0
+	1.0 1.0 0.0
+end texture vertices
+Texture faces:
+	1 2 4
+	4 3 1
+end texture faces
+end of texture
+end of file

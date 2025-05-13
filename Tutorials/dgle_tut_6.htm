@@ -1,0 +1,103 @@
+<HTML>
+<HEAD>
+    <TITLE>DRON_PROGS</TITLE> 
+<META content="text/html; charset=WINDOWS-1251" http-equiv=Content-Type>                     
+<META name="author" content="DRON">
+<META name="keywords" content="программирование, программирование игр, gamedev, Delphi, Java, J2ME, C#, C++, mono, tao, фото, engine, 3d, полезные программы, звук, графика, коды, DirectX, OpenGL, библиотеки, компоненты, как создать игру, движок, движок на Delphi, DRON, Коротков Андрей, скачать, примеры, исходники, source, OpenGL Engine, 3D, анимированные модели, max, Power Draw, Asphyre, DelphiX, обучение, dglengine, бесплатно, ролевая игра, RPG, стрелялка, shooter, games, статьи, помощь"> 
+<META name="description" content="Обитель DRON'а. Программирование на Delphi, C#, C++ и J2ME. Gamedev: 2D/3D, статьи, исходники, примеры, движки."> 
+<style type="text/css">
+#menu_body{background:#808080;width:140px}
+#menu_body ul li{list-style-type:none;border-bottom:1px solid #fff;margin-left:-40px;padding-left:7px}
+#menu_body ul li a{color:#fff;font-family:verdana,arial,sans-serif;text-decoration:none}
+#menu_body ul li ul li{border:0;list-style-type:square;color:#fff;list-style-position:inside}
+#menu_body ul li ul{border-top:1px solid #fff;margin-left:-7px;padding-left:50px}
+#menu_body li ul{display:none}
+#menu_body li:hover ul, #menu_body li.over ul{display: block}
+
+body,td,th {
+	font-family:  tahoma, Arial, Helvetica;
+	font-size: 11px;
+	color: Black;
+	text-decoration:none;
+}
+body {
+	background-color: White;
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	text-decoration:none;
+}
+a:link {
+	color: Black;
+	text-decoration:none;
+}
+a:visited {
+	color: Black;
+	text-decoration:none;
+}
+a:hover {
+	color: Gray;
+	text-decoration:underline;
+}
+a:active {
+	color: Gray;
+	text-decoration:none;
+}
+</style>
+
+<script type="text/javascript">
+startList = function() {
+      if (document.all&&document.getElementById) {
+            navRoot = document.getElementById("ul1");
+            for (i=0; i<navRoot.childNodes.length; i++) {
+                  node = navRoot.childNodes[i];
+                  if (node.nodeName=="LI") {
+                        node.onmouseover=function() {
+                              this.className+=" over";
+                        }
+                        node.onmouseout=function() {
+                              this.className=this.className.replace(" over", "");
+                        }
+                  }
+            }
+      }
+}
+window.onload=startList;
+</script>
+</HEAD>        
+<BODY BottomMargin=0 text=Black color=#ffffff style="background:url('images/up.jpg') top center no-repeat;" topmargin="0" leftmargin="0">
+<table cellspacing="0" align=center cellpadding="0" width=90% border=0 height=100% >
+<tr><td height=100% background="images/cornerl.gif">&nbsp;</td>
+<td><table border=0 style="background:url('images/dronslogo.gif') top right no-repeat;" cellspacing="0" cellpadding="0">
+<tr><td valign=top>
+<table width=100% border=0 cellspacing="0" cellpadding="3"><br>
+<center><img src="images/dron_small.gif" width=100 height=98 border=0></center>
+<br>
+<? include("menu.txt");?>
+</table></td>
+<td>
+<table border=0 style="background:url('images/line.gif') top left no-repeat;" cellspacing="4" cellpadding="4">
+<tr>
+<td style="padding-top:20px" height=100% valign=top>
+
+<br><br>
+<b><a href="index.htm"><u>Уроки по DGLEngine</u></a> &#151;> "2D+3D=Cool"</b><br><br>
+
+<p>Эта статья посвящена совмещению отрисовки 2D и&nbsp;3D графики и&nbsp;представляет собой последнюю статью перед большим циклом статей про 3D графику. Итак, приступим. Препарирвать будем <b><a href="files/tutorial5.rar" target="_blank">пример [211Kb]</a></b> из предыдущей статьи про звук. Мы заменим некрасивые астероиды в&nbsp;игре, полноценными 3D моделями, при этом изменения коснутся только отрисовки, вся игровая механника останется прежней. <br />Первым делом, нужно загрузить модель астероида и&nbsp;текстуру для него. Загрузка текстуры уже есть, нам достаточно просто заменить &laquo;Asteroid.bmp&raquo; из папки &laquo;Data&raquo;, на необходимую текстуру. Далее, нужно загрузить модель. Я&nbsp;надеюсь, с&nbsp;экспортированием модели из 3D Studio MAX ни у&nbsp;кого проблемм не будет. Я&nbsp;осветил этот аспект в&nbsp;ридми, который лежит в&nbsp;той же папке, что и&nbsp;конвертор. Вот так будет выглядеть загрузка текстуры и&nbsp;модели:<br />AsteroidModel :&nbsp;integer;<br />&hellip;&hellip;&hellip;&hellip;&hellip;.<br /> LoadTexture(&#146;DataAsteroid.jpg&#146;,AsteroidTexture);<br /> AsteroidModel:=LoadModel(&#146;DataAsteroid.dmd&#146;,MDL_SCALE_EVERY_FRAME);<br />При загрузке модели стоит параметр MDL_SCALE_EVERY_FRAME &#151; это значит, что модель будет уменьшена или увеличена до  таких размеров что бы влезать в&nbsp;куб с&nbsp;единичной длинной по всем осям. Подробнее про все это мы поговорим в&nbsp;статьях посвященных 3D.<br />Далее заменим код процедуры &laquo;DrawAsteroid;&raquo; на вот такой:<br />procedure DrawAsteroid;<br />var i&nbsp;: integer;<br />begin<br />AdductingMatrix3Dto2D;<br /><br />for i:=0 to Length(Asteroids)-1 do<br /> if Asteroids[i].Active then<br />  begin<br />  BeginObj3D;<br /><br />  SetLight();<br /><br />  Position2D(Asteroids[i].X+32,Asteroids[i].Y+32);<br />  Scale3D(0.25);<br />  RotateX(Asteroids[i].Angle); RotateY(-Asteroids[i].Angle/2); RotateZ(Asteroids[i].Angle/1.5);<br />  SetTexture(AsteroidTexture);<br />  DrawModel(AsteroidModel,0,TRUE);<br /><br />  DeactiveLight();<br /><br />  EndObj3D;<br />  end;<br /><br /> ReturnStandartMatrix3D;<br />end;<br />Теперь подробно поговорим о&nbsp;каждой строчке этого кода.<br />AdductingMatrix3Dto2D; &#151; преобразует систему координат из трехмерной в&nbsp;двухмерную. Т.е. исчезает координата Z, а&nbsp;координаты X&nbsp;и Y&nbsp;&#151; варьируются между 0&nbsp;и разрешением экрана т.е. как обычно в&nbsp;2D. Благодаря этой возможности движка внедрять 3D модели в&nbsp;2D игру становится крайне просто. Соответственно ReturnStandartMatrix3D; &#151; возвращает назад стандартную 3D матрицу. В&nbsp;нашем случае вызывать эту процедуру &#151; не обязательно, но не вызывать ее &#151; дурной тон <img style="border: 0px; vertical-align: middle;" alt="cool" src="images/smiles/cool.gif" /> .<br />BeginObj3D; &#151; указывает движку, что все последующие вызовы процедур и&nbsp;функций будут относится к&nbsp;одному 3D объекту. После отрисовки 3D объекта обязательно вызывать EndObj3D;, иначе это может привести к&nbsp;неожиданным и&nbsp;непредсказуемым последствиям на экране.<br />SetLight(); &#151; устанавливает источник света по умолчанию, для подсветки рисуемой модели. Об этой процедуре подробнее будет рассказано в&nbsp;следующих статьях.<br />DeactiveLight(); &#151; соответственно отклучает подсветку.<br />Position2D(Asteroids[i].X+32,Asteroids[i].Y+32); &#151; устанавливает положение модели на экране. Вызывать нужно сразу после BeginObj3D; или по крайней мере до каких либо преобразований, будь то &#151; масштабирование или поворот. Нарушение этого может привести к&nbsp;неожиданному результату и&nbsp;некорректному отображению модели на экране. Объяснение всего этого будет дано в&nbsp;статьях посвященных 3D, пока просто прими это как должное. Еще важно помнить, что в&nbsp;отличае от простых текстур или спрайтов координаты модели определяются по ее центру, а&nbsp;не по левому верхнему углу картинки(текстуры). По этому, мы смещаем модель вправо и&nbsp;вниз на половину ее ширины и&nbsp;высоты. Смещяем на 32 пикселя т.к. на экране размер астероида 64*64.<br />Scale3D(0.25); &#151; масштабируем 3D модель так, что бы она примерно соответствовала размеру 64*64 пикселя. Способа автоматезировать это в&nbsp;движке нету (по крайней мере в&nbsp;текущей версии), по этому коэффициент масштабирования я&nbsp;подбирал на глазок <img style="border: 0px; vertical-align: middle;" alt="smile" src="images/smiles/smile.gif" /> .<br />RotateX(Y или Z) &#151; просто поворачивают модель вокруг ее центра относительно одной из осей на определенный угол.<br />SetTexture(AsteroidTexture); &#151; выбираем текстуру, которая будет &laquo;натянута&raquo; на модель.<br />DrawModel(AsteroidModel,0,TRUE); &#151; собственно рисуем модель. С&nbsp;нулевым кадром анимации, т.к. наша модель вообще не анимирована. Последний параметр указывает будет ли модель сглаживаться или нет. Обо всем этом опять же будет рассказано в&nbsp;следующих статьях.<br />Вот отрисовку вроде как разобрали, но это еще не все. Нужно так же поменять пару строчек в&nbsp;процедуре глобальной отрисовки движка. До этого у&nbsp;нас было только лишь 2D, по этому мы рисовали все объекты между вызовами Begin2D; и&nbsp;End2D;, но теперь появилось 3D, а&nbsp;если пытаться рисовать 3D между этими вызовами, то ничего просто не нарисуется. Так что внесем небольшие изменения, после которых процедура глобальной отрисовки движка примет вид:<br />procedure Draw;<br />begin<br />Begin2D;<br /> DrawTexture2D_Simple(Space,0,0,640,480);<br /> DrawPlasma;<br /> DrawPlayer;<br />End2D;<br /><br /> DrawAsteroid;<br /><br />Begin2D;<br /> DrawExplo;<br /><br /> DrawText2D(Font,10,10,$FFFFFF,&#146;FPS: &#146;+IntToStr(GetFPS),200,0.6,20,false);<br /> DrawConsole;<br />End2D;<br />end;<br />Вот теперь можно нажимать F9 и&nbsp;смотреть, что получилось, а&nbsp;потом &#151; ждать следующей статьи  <img style="border: 0px; vertical-align: middle;" alt="biggrin" src="images/smiles/wink.gif" /> .<br /><br /><b><a href="files/tutorial6.rar" target="_blank">Скачать пример из статьи [161Kb] </a></b></p>
+
+
+
+<br>
+<center><img src="images/stop.gif" width=60 height=57 border=0></center><br>	
+</td><tr>                      
+<td colspan=2 align=right><img src="images/ugol.gif" width=45 height=49 border=0></td></tr>
+</table>
+</td></tr>
+</table></td>
+<td height=100% width=50 background="images/cornerr.gif">&nbsp;</td>
+<? include("copy.txt");?>
+<td height=1 width=50 background="images/cornerr.gif">&nbsp;</td></tr>
+</tr></table>
+</BODY>
+</HTML>
