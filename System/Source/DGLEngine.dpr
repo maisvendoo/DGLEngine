@@ -47,6 +47,8 @@ result:=2;
 end;
 
 exports
+SetTextureLODBias,
+SetTextureDefaultFilteringParameters,
 //UnDocumented
 SetClipPlane,
 DLL_ver,
@@ -286,6 +288,7 @@ NET_Write,
 NET_Send,
 NET_Recv,
 NET_Update;
+
 
 begin
   Randomize;

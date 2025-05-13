@@ -85,6 +85,10 @@ procedure SceneUseMaterial(Enable : boolean); stdcall;
 function  IsFBOSupported : boolean; stdcall;
 procedure UseFBO(Enable : boolean); stdcall;
 
+procedure SetTextureLODBias(x : integer); stdcall;
+procedure SetTextureDefaultFilteringParameters(x: integer; y: integer); stdcall;
+
+
 implementation
 
 type
@@ -111,6 +115,16 @@ MouseButton : Integer = -1;
 Xcoord, Ycoord : Integer;
 
 h_Instance : HINST;
+
+procedure SetTextureLODBias(x : integer); stdcall;
+begin
+   x := 0;
+end;
+
+procedure SetTextureDefaultFilteringParameters(x: integer; y: integer); stdcall;
+begin
+   x := x + y;
+end;
 
 {Timer-------------------------------------------------------------------------}
 function AddTimer(Interval : Cardinal; OnTimerProcedure : pointer) : Cardinal; stdcall;
